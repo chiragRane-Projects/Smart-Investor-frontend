@@ -7,13 +7,14 @@ export default function StockDataTable({ ticker, period, interval }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://127.0.0.1:5000/api/stock?ticker=${ticker}&period=${period}&interval=${interval}`
+          `${API_URL}/api/stock?ticker=${ticker}&period=${period}&interval=${interval}`
         );
         const result = await response.json();
         if (response.ok) {

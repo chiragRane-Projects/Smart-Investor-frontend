@@ -6,20 +6,23 @@ export default function StockPrediction({ ticker, period }) {
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchPrediction = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`http://127.0.0.1:5000/api/predict?ticker=${ticker}&period=${period}`);
+        console.log('API URL:', API_URL);
+        const response = await fetch(`${API_URL}/api/predict?ticker=${ticker}&period=${period}`);
         const result = await response.json();
         if (response.ok) {
           setPrediction(result);
           setError(null);
         } else {
-          setError(result.error);
+          setError(result.error || "Unknown error occurred");
         }
       } catch (err) {
+        console.error("Prediction fetch failed:", err);
         setError("Failed to fetch prediction");
       }
       setLoading(false);

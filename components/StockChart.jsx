@@ -8,15 +8,17 @@ export default function StockChart({ ticker, period }) {
   const [mse, setMse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchChart = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`http://127.0.0.1:5000/api/predict/chart?ticker=${ticker}&period=${period}`);
+        const response = await fetch(`${API_URL}api/predict/chart?ticker=${ticker}&period=${period}`);
         const result = await response.json();
         if (response.ok) {
-          setChartUrl(`http://127.0.0.1:5000${result.chart_url}`);;
+          setChartUrl(`${API_URL.replace(/\/$/, "")}${result.chart_url}`)
           setMse(result.mse);
           setError(null);
         } else {
@@ -47,6 +49,7 @@ export default function StockChart({ ticker, period }) {
               width={500}
               height={300}
               className="w-full h-auto"
+              unoptimized
             />
             <p><strong>Mean Squared Error:</strong> {mse}</p>
           </div>
