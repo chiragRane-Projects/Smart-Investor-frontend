@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import StockDataTable from "@/components/StockDataTable";
 import StockPrediction from "@/components/StockPrediction";
-import StockChart from "@/components/StockChart";
 
 export default function Home() {
   const [ticker, setTicker] = useState("AAPL");
@@ -49,12 +48,9 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <StockDataTable ticker={ticker} period={period} interval={interval} />
             <StockPrediction ticker={ticker} period={period} />
-            <StockChart ticker={ticker} period={period} />
           </div>
         </CardContent>
       </Card>
     </div>
   );
 }
-
-// http://127.0.0.1:5000
